@@ -9,9 +9,9 @@
 | [05 - Simple Cox regression](05_simple_cox_regression)               |  x   |      |        |       |             |
 | [06 - Multiple Cox regression](06_multiple_cox_regression)           |  x   |      |        |       |             |
 | [07 - MMRM](07_mmrm_mixed_model_repeated_measures)                   |  x   |      |        |       |             |
-| [08 - Poisson regression](08_poisson_regression)                     |  x   |      |        |       |             |
-| [09 - Negative binomial regression](09_negative_binomial_regression) |      |      |        |       |             |
-| Concept: Coding                                                      |      |      |        |       |             |
+| [08 - Poisson regression](08_poisson_regression)                     |  x   |  x   |        |       |             |
+| [09 - Negative binomial regression](09_negative_binomial_regression) |  x   |  x   |        |       |             |
+| [Concept: Coding](concepts)                                          |  x   |  x   |        |       |             |
 | Concept: Contrast                                                    |      |      |        |       |             |
 | Concept: Estimate                                                    |      |      |        |       |             |
 
