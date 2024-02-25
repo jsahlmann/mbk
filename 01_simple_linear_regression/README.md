@@ -16,4 +16,3 @@ Please adjust the paths to data and to images after downloading the juypter note
 - README.md: This file
 - ws_01_r.ipynb: Jupyter notebook worksheet for R
 - ws_01_r.md: Markdown export of jupyter notebook for reading in github
-
