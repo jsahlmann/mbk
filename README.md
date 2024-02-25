@@ -14,15 +14,15 @@ Further languages will be added in the future.
 
 The current models are:
 
-- 01 Simple linear regression
-- 02 Multiple linear regression
-- 03 Simple logistic regression
-- 04 Multiple logistic regression
-- 05 Simple Cox regression
-- 06 Multiple Cox regression
-- 07 MMRM Mixed model repeated measures
-- 08 Poisson regression
-- 09 Negative binomial regression 
+- [01 Simple linear regression](01_simple_linear_regression)
+- [02 Multiple linear regression](02_multiple_linear_regression)
+- [03 Simple logistic regression](03_simple_logistic_regression)
+- [04 Multiple logistic regression](04_multiple_logistic_regression)
+- [05 Simple Cox regression](05_simple_cox_regression)
+- [06 Multiple Cox regression](06_multiple_cox_regression)
+- [07 MMRM Mixed model repeated measures](07_mmrm_mixed_model_repeated_measures)
+- [08 Poisson regression](08_poisson_regression)
+- [09 Negative binomial regression](09_negative_binomial_regression)
 
 Further models will be added in the future.
 
