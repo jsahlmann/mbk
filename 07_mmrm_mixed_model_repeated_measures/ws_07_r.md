@@ -238,7 +238,7 @@ TODO: Check completeness of the assumptions and add example code for the checks.
 
 If using character variables, the first level of the alphabetic sort order will be regardes as reference level.
 
-For some functions the character variable has to be converted to a factor, e.g., for the contrasts() fucntion
+For some functions the character variable has to be converted to a factor, e.g., for the contrasts() function.
 
 
 
