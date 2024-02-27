@@ -1,4 +1,4 @@
-# 05 - Simple Cox regression - Categorical variable
+# 06 - Multiple Cox regression
 
 ## Data
 
@@ -55,21 +55,22 @@ The tidy() function from the broom-packages formats the output into a tibble for
 library(tidyverse)
 library(broom)
 library(survival)
-pbc1 <- pbc %>% select(time, status, sex) %>% na.omit()
+pbc1 <- pbc %>% select(time, status, age, sex) %>% na.omit()
 pbc1$status <- ifelse(pbc1$status == 0, 0, 1) # recode of status, all events equal 1, censored equal 0
-my_cox <- coxph(formula = Surv(time, status) ~ sex, data = pbc1)
+my_cox <- coxph(formula = Surv(time, status) ~ age + sex, data = pbc1)
 tidy(my_cox)
 ```
 
 
 <table class="dataframe">
-<caption>A tibble: 1 × 5</caption>
+<caption>A tibble: 2 × 5</caption>
 <thead>
 	<tr><th scope=col>term</th><th scope=col>estimate</th><th scope=col>std.error</th><th scope=col>statistic</th><th scope=col>p.value</th></tr>
 	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>sexm</td><td>0.361347</td><td>0.2088782</td><td>1.729941</td><td>0.08364085</td></tr>
+	<tr><td>age </td><td>0.02209746</td><td>0.007271229</td><td>3.039027</td><td>0.002373437</td></tr>
+	<tr><td>sexm</td><td>0.29995205</td><td>0.209753305</td><td>1.430023</td><td>0.152710421</td></tr>
 </tbody>
 </table>
 
@@ -80,7 +81,7 @@ tidy(my_cox)
 The output is divided into blocks to explain it and to reproduce it afterwards in the different languages.
 
 ### Block 1
-![Block 1](img_screenshots_sex/block_1.png)
+![Block 1](img_screenshots_age_sex/block_1.png)
 
 Row 1 refers to the dataset which was used in this procedure.
 
@@ -112,7 +113,7 @@ nobs(my_cox) # Number of events
 
 
 ### Block 2
-![Block 2](img_screenshots_sex/block_2.png)
+![Block 2](img_screenshots_age_sex/block_2.png)
 
 Coding of categorical is listed here.
 
@@ -151,7 +152,7 @@ See the difference between SAS and R.
 The consequence is the other direction of the effect of the gender.
 
 ### Block 3
-![Block 3](img_screenshots_sex/block_3.png)
+![Block 3](img_screenshots_age_sex/block_3.png)
 
 This block presents the number of events and of censored values and the proportion of censored values.
 
@@ -183,7 +184,7 @@ table(pbc1$status)
 
 
 ### Block 4
-![Block 4](img_screenshots_sex/block_4.png)
+![Block 4](img_screenshots_age_sex/block_4.png)
 
 The model fit status is described by 
 -  AIC (Akaike Information Criterion): Smaller is better.
@@ -206,14 +207,14 @@ glance(my_cox)
 	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>418</td><td>186</td><td>2.748578</td><td>0.09734096</td><td>3.024981</td><td>0.08199126</td><td>2.99</td><td>0.08364085</td><td>NA</td><td>NA</td><td>0.006553974</td><td>0.9919921</td><td>0.5182891</td><td>0.01261923</td><td>-1007.537</td><td>2017.075</td><td>2020.301</td><td>418</td></tr>
+	<tr><td>418</td><td>186</td><td>11.97965</td><td>0.002504107</td><td>12.29379</td><td>0.002140117</td><td>12.24</td><td>0.002202114</td><td>NA</td><td>NA</td><td>0.02825265</td><td>0.9919921</td><td>0.569148</td><td>0.02173493</td><td>-1002.922</td><td>2009.844</td><td>2016.295</td><td>418</td></tr>
 </tbody>
 </table>
 
 
 
 ### Block 5
-![Block 5](img_screenshots_sex/block_5.png)
+![Block 5](img_screenshots_age_sex/block_5.png)
 
 These global tests test the null hypothesis that all regression coefficents are zero.
 
@@ -228,6 +229,8 @@ Score: see above statistic.sc
 Wald: see above statistic.wald
 
 
+
+
 ```R
 glance(my_cox)$statistic.sc
 
@@ -235,15 +238,15 @@ glance(my_cox)$statistic.wald
 ```
 
 
-<strong>test:</strong> 3.02498133816624
+<strong>test:</strong> 12.2937892784102
 
 
 
-<strong>test:</strong> 2.99
+<strong>test:</strong> 12.24
 
 
 ### Block 6
-![Block 6](img_screenshots_sex/block_6.png)
+![Block 6](img_screenshots_age_sex/block_6.png)
 
 This block provides a global test for categorical variables and their influence.
 
@@ -258,20 +261,21 @@ tidy(my_cox)
 
 
 <table class="dataframe">
-<caption>A tibble: 1 × 5</caption>
+<caption>A tibble: 2 × 5</caption>
 <thead>
 	<tr><th scope=col>term</th><th scope=col>estimate</th><th scope=col>std.error</th><th scope=col>statistic</th><th scope=col>p.value</th></tr>
 	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>sexm</td><td>0.361347</td><td>0.2088782</td><td>1.729941</td><td>0.08364085</td></tr>
+	<tr><td>age </td><td>0.02209746</td><td>0.007271229</td><td>3.039027</td><td>0.002373437</td></tr>
+	<tr><td>sexm</td><td>0.29995205</td><td>0.209753305</td><td>1.430023</td><td>0.152710421</td></tr>
 </tbody>
 </table>
 
 
 
 ### Block 7
-![Block 7](img_screenshots_sex/block_7.png)
+![Block 7](img_screenshots_age_sex/block_7.png)
 
 Column 1 "Parameter" lists the parameter in the model.
 
@@ -296,22 +300,24 @@ summary(my_cox)
 
 
     Call:
-    coxph(formula = Surv(time, status) ~ sex, data = pbc1)
+    coxph(formula = Surv(time, status) ~ age + sex, data = pbc1)
     
       n= 418, number of events= 186 
     
-           coef exp(coef) se(coef)    z Pr(>|z|)  
-    sexm 0.3613    1.4353   0.2089 1.73   0.0836 .
+             coef exp(coef) se(coef)     z Pr(>|z|)   
+    age  0.022097  1.022343 0.007271 3.039  0.00237 **
+    sexm 0.299952  1.349794 0.209753 1.430  0.15271   
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     
          exp(coef) exp(-coef) lower .95 upper .95
-    sexm     1.435     0.6967    0.9531     2.161
+    age      1.022     0.9781    1.0079     1.037
+    sexm     1.350     0.7409    0.8948     2.036
     
-    Concordance= 0.518  (se = 0.013 )
-    Likelihood ratio test= 2.75  on 1 df,   p=0.1
-    Wald test            = 2.99  on 1 df,   p=0.08
-    Score (logrank) test = 3.02  on 1 df,   p=0.08
+    Concordance= 0.569  (se = 0.022 )
+    Likelihood ratio test= 11.98  on 2 df,   p=0.003
+    Wald test            = 12.24  on 2 df,   p=0.002
+    Score (logrank) test = 12.29  on 2 df,   p=0.002
     
 
 
